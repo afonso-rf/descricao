@@ -1,5 +1,4 @@
-
-import Municipio from "js/municipio"
+const separador = [' - ', ' <> ']
 
 let tipo = [
     'ROTA',
@@ -16,10 +15,11 @@ let opera = [
     'UMTELECOM',
     'VIVO',
     'EMBRATEL',
-    'TELEBRAS'
-]
+    'TELEBRAS',
+    'MULTIVALE',
+    'EQUINIX',
 
-const divi = [' - ', ' <> ']
+]
 
 tipo = tipo.sort()
 for (let n in tipo) {
@@ -48,19 +48,19 @@ for (let o in opera) {
 
 function gerar() {
     let res = document.getElementById('res')
-    let host1 = document.getElementById('hostA')
-    let hostA = host1.value.split('-')
-    let host2 = document.getElementById('hostB')
-    let hostB = host2.value.split('-')
+    let getHostA = document.getElementById('hostA')
+    let hostA = getHostA.value.split('-')
+    let getHostB = document.getElementById('hostB')
+    let hostB = getHostB.value.split('-')
     let falha = document.getElementById('falha')
     if (hostA.length < 6) {
         alert('Dados invalidos! Informe o Hostname A.')
-        host1.value = ""
-        host1.focus()
+        getHostA.value = ""
+        getHostA.focus()
     } else if (hostB.length < 6) {
         alert('Dados invalidos! Informe o Hostmane B.')
-        host2.value = ""
-        host2.focus()
+        getHostB.value = ""
+        getHostB.focus()
     } else if (falha.value.length < 4) {
         alert('Dados invalidos! Informe o tipo da falha.')
         falha.value = ""
@@ -70,27 +70,25 @@ function gerar() {
         let tipo = tipoSelect.options[tipoSelect.selectedIndex].text
         let operaSelect = document.getElementById('opera')
         let opera = operaSelect.options[operaSelect.selectedIndex].text
-        let lista = [
-            `${hostA[2].toUpperCase()} ${hostA[3].toUpperCase()}`,
-            `${hostB[2].toUpperCase()} ${hostB[3].toUpperCase()}`
-        ]
-        lista = lista.sort()
-        res.innerHTML = `${tipo}${divi[0]}${lista[0]}${divi[1]}${lista[1]}
-        ${divi[0]}${opera}${divi[0]}${falha.value.toUpperCase()}`
-
+        const lista = [hostA[2], hostB[2]]
+        const responseList = []
+        fetch('js/CodigosCNL.json')
+            .then(response => response.json())
+            .then(data => {
+                for (h in lista) {
+                    for (let i in data) {
+                        if (data[i].SIGLA == lista[h].toUpperCase()) {
+                            responseList.push(data[i].MUNICIPIO)
+                        }
+                    }
+                }
+                let sites = [
+                    `${responseList[0]} ${hostA[3].toUpperCase()}`,
+                    `${responseList[1]} ${hostB[3].toUpperCase()}`
+                ]
+                sites = sites.sort()
+                res.innerHTML = `${tipo}${separador[0]}${sites[0]}${separador[1]}${sites[1]}
+        ${separador[0]}${opera}${separador[0]}${falha.value.toUpperCase()}`
+            });
     }
 }
-/*
-for (let i in municipio) {
-    //   if (municipio[i]["UF"] == 'CE'){
-    console.log(municipio[i]["SIGLA"]) //["SIGLA"] + "-" + municipio[i]["MUNICIPIO"])
-    // }
-}
-
-const municipio = {
-    'FLA': 'FORTALEZA',
-    'AQZ': 'AQUIRAZ',
-    'BTT': 'BATURITE',
-}
-*/
-// br-ce-fla-dcm-tp-01
