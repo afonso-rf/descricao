@@ -92,3 +92,13 @@ function gerar() {
             });
     }
 }
+
+const copyButton = document.getElementById("copyButton")
+copyButton.addEventListener('click', ()=>{
+    let inputText = document.createElement('input')
+    inputText.value = document.querySelector("#res").innerText
+    document.body.appendChild(inputText)
+    inputText.select()
+    document.execCommand('copy')
+    document.body.removeChild(inputText)
+})

@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,300&display=swap" rel="stylesheet">
     <title>Gerador de Descrições</title>
 </head>
 
@@ -13,20 +16,26 @@
     <h1>Gerador de Descrições</h1>
     <div class="container">
         <form action="" method="POST" class="main-form">
-            <select class="select-form" id="tipo">
+            <select class="select-form box-style" id="tipo">
             </select> -
-            <input class="hostname" type="text" id="hostA" placeholder="Hostname A"> X
-            <input class="hostname" type="text" id="hostB" placeholder="Hostname B"> -
-            <select class="select-form" id="opera"></select>
-            <input class="hostname" type="text" id="falha" placeholder="Tipo de Falha">
+            <input class="hostname box-style" type="text" id="hostA" placeholder="Hostname A" size="23" maxlength="23" required>
+            X
+            <input class="hostname box-style" type="text" id="hostB" placeholder="Hostname B" size="23" maxlength="23" required>
+            -
+            <select class="select-form box-style" id="opera"></select> -
+            <input class="falha box-style" type="text" id="falha" placeholder="Tipo de Falha" maxlength="30" required>
         </form>
         <div>
-            <input class="button" type="button" value="Gerar" id="gerar" onclick="gerar()">
+            <input class="button" type="submit" value="Gerar" id="gerar" onclick="gerar()">
+            <input class="button" type="button" value="Copy" id="copyButton">
+            
         </div>
-        <div class="res" id="res"></div>
+    </div>
+    <div resultado class="resultado">
+        
+        <p  type="text" id="res"></p>
     </div>
     <div>
-
     </div>
     <script src="js/main.js"></script>
 </body>
