@@ -1,3 +1,42 @@
 * {
     background: none;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px
+}
+
+/* Formulario */
+.main-form {
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.select-form {
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding: 3px;
+    border-radius: 5px;
+}
+.hostname {
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.button {
+    background-color: #586570fa;
+    color: #eeeeee;
+    font-size: 20px;
+    margin-left:55%;
+    padding: 4px 15px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 4px 4px rgba(61, 59, 59, 0.498);
+    cursor: pointer;
+}
+
+.button:hover {
+    border:2px solid #586570fa;
 }
