@@ -40,7 +40,7 @@ let opera = [
     "TELY",
     "ARAUJO SAT",
     "PONTO A PONTO",
-    "MAIS TELECOM",
+    "MAIS TELECOM"
 ]
 
 tipo = tipo.sort()
