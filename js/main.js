@@ -9,15 +9,38 @@ let tipo = [
 ]
 
 let opera = [
-    'MOBWIRE',
-    'OI',
-    'TIM',
-    'UMTELECOM',
-    'VIVO',
-    'EMBRATEL',
-    'TELEBRAS',
-    'MULTIVALE',
-    'EQUINIX',
+    "MOBWIRE",
+    "EMBRATEL",
+    "UM TELECOM",
+    "ETICE",
+    "LUMEN",
+    "BRISANET",
+    "ADL LINK",
+    "OI",
+    "MULTIVALE",
+    "ALGAR",
+    "MEGALINK",
+    "VIVO",
+    "TIM",
+    "TELXIUS",
+    "INTERNEXA",
+    "GLOBENET",
+    "EVO TELECOM",
+    "COGENT",
+    "CODATA",
+    "SKY",
+    "TELEBRAS",
+    "WEBFOCO",
+    "ITS BRASIL",
+    "IX",
+    "GOOGLE",
+    "FACEBOOK",
+    "NETFLIX",
+    "AKAMAI",
+    "TELY",
+    "ARAUJO SAT",
+    "PONTO A PONTO",
+    "MAIS TELECOM",
 
 ]
 
@@ -76,7 +99,7 @@ function gerar() {
             .then(response => response.json())
             .then(data => {
                 for (h in lista) {
-                    for (let i in data) {
+                    for (i in data) {
                         if (data[i].SIGLA == lista[h].toUpperCase()) {
                             responseList.push(data[i].MUNICIPIO)
                         }
@@ -94,7 +117,7 @@ function gerar() {
 }
 
 const copyButton = document.getElementById("copyButton")
-copyButton.addEventListener('click', ()=>{
+copyButton.addEventListener('click', () => {
     let inputText = document.createElement('input')
     inputText.value = document.querySelector("#res").innerText
     document.body.appendChild(inputText)
