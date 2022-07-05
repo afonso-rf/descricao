@@ -97,14 +97,15 @@ function gerar() {
         let opera = operaSelect.options[operaSelect.selectedIndex].text
         const lista = [hostA[1], hostB[1]]
         const responseList = []
+        const uf = {}
         fetch('js/CodigosCNL.json')
             .then(response => response.json())
             .then(data => {
-                for (h in lista) {
-                    for (i in data) {
-                        if (data[i].SIGLA == lista[h].toUpperCase()) {
-                            responseList.push(data[i].UF)
-                            responseList.push(data[i].MUNICIPIO)
+                for (h of lista) {
+                    for (i of data) {
+                        if (i.SIGLA == h.toUpperCase()) {
+                            responseList.push(i.MUNICIPIO)
+                            uf[i.MUNICIPIO] = i.UF
                         }
                     }
                 }
@@ -114,8 +115,10 @@ function gerar() {
                     `${responseList[3]} ${hostB[2].toUpperCase()}`
                 ]
                 sites = sites.sort()
+                let siteUf = sites[0].split(" ")
+                siteUf = uf[siteUf]
                 res.innerHTML = 
-                `${sites[0]}${separador[0]}${tipo_falha[tipo]}${separador[0]}${sites[1]}${separador[1]}${sites[2]}${separador[0]}${opera}`
+                `${sitesUf}${separador[0]}${tipo_falha[tipo]}${separador[0]}${sites[1]}${separador[1]}${sites[2]}${separador[0]}${opera}`
             });
     }
 }
