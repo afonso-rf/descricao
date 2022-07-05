@@ -118,7 +118,7 @@ function gerar() {
                 let siteUf = sites[0].split(" ")
                 siteUf = uf[siteUf]
                 res.innerHTML = 
-                `${sitesUf}${separador[0]}${tipo_falha[tipo]}${separador[0]}${sites[1]}${separador[1]}${sites[2]}${separador[0]}${opera}`
+                `${siteUf}${separador[0]}${tipo_falha[tipo]}${separador[0]}${sites[1]}${separador[1]}${sites[2]}${separador[0]}${opera}`
             });
     }
 }
