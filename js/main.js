@@ -1,12 +1,17 @@
-const separador = [':', ' <> ']
+const separador = ['::', ' <> ']
 
-let tipo = [
-    'ROTA',
-    'ROTA DWDM',
-    'TRANSPORTE',
-    'POP',
-    'CONEXAO LOCAL',
-]
+let tipo_falha = {
+    "ATENUACAO"     :     "ATN",
+    "FALHA_DE_HARDWARE" : "FHW",
+    "FALHA_DE_SOFTWARE" : "FSW",
+    "FALHA_NO_CLIENTE"  : "FCL",
+    "OSCILACAO"     :     "OSC",
+    "RUPTURA"       :     "RUP",
+    "FALHA_DE_ENERGIA"  : "FEG",
+    "PERDA_DE_GERENCIA" : "FGR",
+    "SUPERAQUECIMENTO"  : "TPA",
+    "INTERMITENCIA"     : "INT"
+}
 
 let opera = [
     "MOBWIRE",
@@ -44,13 +49,13 @@ let opera = [
 
 ]
 
-tipo = tipo.sort()
-for (let n in tipo) {
+// tipo_falha = tipo_falha.sort()
+for ( n of Object.keys(tipo_falha)) {
     let item = document.createElement('option')
     let lista = document.querySelector('#tipo')
     item.value = `na${n}`
-    item.text = tipo[n].toUpperCase()
-    if (tipo[n] == 'ROTA') {
+    item.text = n.toUpperCase()
+    if (tipo_falha[n] == 'RUP') {
         item.defaultSelected = true
     }
     lista.appendChild(item)
@@ -82,10 +87,10 @@ function gerar() {
     } else if (hostB.length < 4) {
         alert('Dados invalidos! Informe o Hostmane B.\nEx: CE.FLA.FLA.TP01')
         getHostB.focus()
-    } else if (falha.value.length < 4) {
+    } /* else if (falha.value.length < 4) {
         alert('Dados invalidos! Informe o tipo da falha.')
         falha.focus()
-    } else {
+    }*/ else {
         let tipoSelect = document.getElementById('tipo')
         let tipo = tipoSelect.options[tipoSelect.selectedIndex].text
         let operaSelect = document.getElementById('opera')
@@ -98,17 +103,19 @@ function gerar() {
                 for (h in lista) {
                     for (i in data) {
                         if (data[i].SIGLA == lista[h].toUpperCase()) {
+                            responseList.push(data[i].UF)
                             responseList.push(data[i].MUNICIPIO)
                         }
                     }
                 }
                 let sites = [
-                    `${responseList[0]} ${hostA[2].toUpperCase()}`,
-                    `${responseList[1]} ${hostB[2].toUpperCase()}`
+                    responseList[0],
+                    `${responseList[1]} ${hostA[2].toUpperCase()}`,
+                    `${responseList[3]} ${hostB[2].toUpperCase()}`
                 ]
                 sites = sites.sort()
                 res.innerHTML = 
-                `${tipo}${separador[0]}${sites[0]}${separador[1]}${sites[1]}${separador[0]}${opera}${separador[0]}${falha.value.toUpperCase()}`
+                `${sites[0]}${separador[0]}${tipo_falha[tipo]}${separador[0]}${sites[1]}${separador[1]}${sites[2]}${separador[0]}${opera}`
             });
     }
 }
