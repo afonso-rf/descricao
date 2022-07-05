@@ -76,11 +76,11 @@ function gerar() {
     let getHostB = document.getElementById('hostB')
     let hostB = getHostB.value.split('.')
     let falha = document.getElementById('falha')
-    if (hostA.length < 6) {
+    if (hostA.length < 4) {
         alert('Dados invalidos! Informe o Hostname A.\nEx: CE.FLA.FLA.TP01')
         getHostA.value = ""
         getHostA.focus()
-    } else if (hostB.length < 6) {
+    } else if (hostB.length < 4) {
         alert('Dados invalidos! Informe o Hostmane B.\nEx: CE.FLA.FLA.TP01')
         getHostB.value = ""
         getHostB.focus()
