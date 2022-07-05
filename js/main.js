@@ -107,8 +107,8 @@ function gerar() {
                     `${responseList[1]} ${hostB[2].toUpperCase()}`
                 ]
                 sites = sites.sort()
-                res.innerHTML = `${tipo}${separador[0]}${sites[0]}${separador[1]}${sites[1]}
-        ${separador[0]}${opera}${separador[0]}${falha.value.toUpperCase()}`
+                res.innerHTML = 
+                `${tipo}${separador[0]}${sites[0]}${separador[1]}${sites[1]}${separador[0]}${opera}${separador[0]}${falha.value.toUpperCase()}`
             });
     }
 }
