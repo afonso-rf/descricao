@@ -1,4 +1,4 @@
-const separador = [' - ', ' <> ']
+const separador = [':', ' <> ']
 
 let tipo = [
     'ROTA',
@@ -78,15 +78,12 @@ function gerar() {
     let falha = document.getElementById('falha')
     if (hostA.length < 4) {
         alert('Dados invalidos! Informe o Hostname A.\nEx: CE.FLA.FLA.TP01')
-        getHostA.value = ""
         getHostA.focus()
     } else if (hostB.length < 4) {
         alert('Dados invalidos! Informe o Hostmane B.\nEx: CE.FLA.FLA.TP01')
-        getHostB.value = ""
         getHostB.focus()
     } else if (falha.value.length < 4) {
         alert('Dados invalidos! Informe o tipo da falha.')
-        falha.value = ""
         falha.focus()
     } else {
         let tipoSelect = document.getElementById('tipo')
