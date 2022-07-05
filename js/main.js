@@ -72,16 +72,16 @@ for (let o in opera) {
 function gerar() {
     let res = document.getElementById('res')
     let getHostA = document.getElementById('hostA')
-    let hostA = getHostA.value.split('-')
+    let hostA = getHostA.value.split('.')
     let getHostB = document.getElementById('hostB')
-    let hostB = getHostB.value.split('-')
+    let hostB = getHostB.value.split('.')
     let falha = document.getElementById('falha')
     if (hostA.length < 6) {
-        alert('Dados invalidos! Informe o Hostname A.\nEx: BR-CE-FLA-FLA-TP-01')
+        alert('Dados invalidos! Informe o Hostname A.\nEx: CE.FLA.FLA.TP01')
         getHostA.value = ""
         getHostA.focus()
     } else if (hostB.length < 6) {
-        alert('Dados invalidos! Informe o Hostmane B.\nEx: BR-CE-FLA-FLA-TP-01')
+        alert('Dados invalidos! Informe o Hostmane B.\nEx: CE.FLA.FLA.TP01')
         getHostB.value = ""
         getHostB.focus()
     } else if (falha.value.length < 4) {
@@ -93,7 +93,7 @@ function gerar() {
         let tipo = tipoSelect.options[tipoSelect.selectedIndex].text
         let operaSelect = document.getElementById('opera')
         let opera = operaSelect.options[operaSelect.selectedIndex].text
-        const lista = [hostA[2], hostB[2]]
+        const lista = [hostA[1], hostB[1]]
         const responseList = []
         fetch('js/CodigosCNL.json')
             .then(response => response.json())
@@ -106,8 +106,8 @@ function gerar() {
                     }
                 }
                 let sites = [
-                    `${responseList[0]} ${hostA[3].toUpperCase()}`,
-                    `${responseList[1]} ${hostB[3].toUpperCase()}`
+                    `${responseList[0]} ${hostA[2].toUpperCase()}`,
+                    `${responseList[1]} ${hostB[2].toUpperCase()}`
                 ]
                 sites = sites.sort()
                 res.innerHTML = `${tipo}${separador[0]}${sites[0]}${separador[1]}${sites[1]}
