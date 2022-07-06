@@ -110,15 +110,15 @@ function gerar() {
                     }
                 }
                 let sites = [
-                    responseList[0],
-                    `${responseList[1]} ${hostA[2].toUpperCase()}`,
-                    `${responseList[3]} ${hostB[2].toUpperCase()}`
+                    
+                    `${responseList[0]} ${hostA[2].toUpperCase()}`,
+                    `${responseList[1]} ${hostB[2].toUpperCase()}`
                 ]
                 sites = sites.sort()
                 const siteA = sites[0].split(" ")
                 const siteUf = uf[siteA[0]]
                 res.innerHTML = 
-                `${siteUf}${separador[0]}${tipo_falha[tipo]}${separador[0]}${sites[1]}${separador[1]}${sites[2]}${separador[0]}${opera}`
+                `${siteUf}${separador[0]}${tipo_falha[tipo]}${separador[0]}${sites[0]}${separador[1]}${sites[1]}${separador[0]}${opera}`
             });
     }
 }
