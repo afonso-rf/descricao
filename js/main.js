@@ -17,6 +17,7 @@ let opera = [
     "MOBWIRE",
     "EMBRATEL",
     "UM TELECOM",
+    "BWM",
     "ETICE",
     "LUMEN",
     "BRISANET",
