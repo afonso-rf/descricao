@@ -47,6 +47,8 @@ let opera = [
     "ARAUJO SAT",
     "PONTO A PONTO",
     "MAIS TELECOM",
+    "TV ALPHAVILLE",
+    "VIRTEX",
 
 ]
 
