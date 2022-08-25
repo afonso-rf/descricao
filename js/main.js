@@ -2,15 +2,16 @@ const separador = ['::', ' <> ']
 
 let tipo_falha = {
     "ATENUACAO"     :     "ATN",
-    "FALHA_DE_HARDWARE" : "FHW",
-    "FALHA_DE_SOFTWARE" : "FSW",
-    "FALHA_NO_CLIENTE"  : "FCL",
+    "FALHA DE HARDWARE" : "FHW",
+    "FALHA DE SOFTWARE" : "FSW",
+    "FALHA NO CLIENTE"  : "FCL",
     "OSCILACAO"     :     "OSC",
     "RUPTURA"       :     "RUP",
     "FALHA_DE_ENERGIA"  : "FEG",
     "PERDA_DE_GERENCIA" : "FGR",
     "SUPERAQUECIMENTO"  : "TPA",
-    "INTERMITENCIA"     : "INT"
+    "INTERMITENCIA"     : "INT",
+    "TAXA DE ERRO" : "TXE",
 }
 
 let opera = [
@@ -22,7 +23,7 @@ let opera = [
     "LUMEN",
     "BRISANET",
     "ADL LINK",
-    "OI",
+    "VITAL/OI",
     "MULTIVALE",
     "ALGAR",
     "MEGALINK",
@@ -49,6 +50,7 @@ let opera = [
     "MAIS TELECOM",
     "TV ALPHAVILLE",
     "VIRTEX",
+    "RNP",
 
 ]
 
