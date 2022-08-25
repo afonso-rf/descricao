@@ -7,9 +7,9 @@ let tipo_falha = {
     "FALHA NO CLIENTE"  : "FCL",
     "OSCILACAO"     :     "OSC",
     "RUPTURA"       :     "RUP",
-    "FALHA_DE_ENERGIA"  : "FEG",
-    "PERDA_DE_GERENCIA" : "FGR",
-    "SUPERAQUECIMENTO"  : "TPA",
+    "FALHA DE ENERGIA"  : "FEG",
+    "PERDA DE GERENCIA" : "FGR",
+    "SUPER AQUECIMENTO"  : "TPA",
     "INTERMITENCIA"     : "INT",
     "TAXA DE ERRO" : "TXE",
 }
