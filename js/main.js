@@ -1,4 +1,4 @@
-const separador = ['::', ' <> ']
+const separador = ['::', ' <> ','_']
 
 let tipo_falha = {
     "ATENUACAO"     :     "ATN",
@@ -116,11 +116,11 @@ function gerar() {
                 }
                 let sites = [
                     
-                    `${responseList[0]}-${hostA[2].toUpperCase()}`,
-                    `${responseList[1]}-${hostB[2].toUpperCase()}`
+                    `${responseList[0]}${separador[2]}${hostA[2].toUpperCase()}`,
+                    `${responseList[1]}${separador[2]}${hostB[2].toUpperCase()}`
                 ]
                 sites = sites.sort()
-                const siteA = sites[0].split("-")
+                const siteA = sites[0].split(separador[2])
                 const siteUf = uf[siteA[0]]
                 res.innerHTML = 
                 `${siteUf}${separador[0]}${tipo_falha[tipo]}${separador[0]}${sites[0]}${separador[1]}${sites[1]}${separador[0]}${opera}`
