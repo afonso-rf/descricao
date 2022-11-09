@@ -1,14 +1,20 @@
-const separador = [' - ', ' <> ']
+const separador = [' - ', ' <> ', '_']
 
-let tipo = [
-    'ROTA',
-    'ROTA DWDM',
-    'TRANSPORTE',
-    'POP',
-    'CONEXAO LOCAL',
-]
+$(function () {
+    var tipo = [
+        'ROTA',
+        'ROTA DWDM',
+        'TRANSPORTE',
+        'POP',
+        'CONEXAO LOCAL',
+    ]
+    $("#tipo").autocomplete({
+        source: tipo
+    })
+})
 
-let opera = [
+$(function(){
+    var operadora = [
     'MOBWIRE',
     'OI',
     'TIM',
@@ -20,6 +26,10 @@ let opera = [
     'EQUINIX',
 
 ]
+$('#operadora').autocomplete({
+    source: operadora
+})
+})
 
 tipo = tipo.sort()
 for (let n in tipo) {
@@ -34,13 +44,13 @@ for (let n in tipo) {
 
 }
 
-opera = opera.sort()
-for (let o in opera) {
+operadora = operadora.sort()
+for (let o in operadora) {
     let item = document.createElement('option')
-    let lista = document.querySelector('#opera')
+    let lista = document.querySelector('#operadora')
     item.value = `op${o}`
-    item.text = opera[o].toUpperCase()
-    if (opera[o] == 'MOBWIRE') {
+    item.text = operadora[o].toUpperCase()
+    if (operadora[o] == 'MOBWIRE') {
         item.defaultSelected = true
     }
     lista.appendChild(item)
@@ -49,52 +59,77 @@ for (let o in opera) {
 function gerar() {
     let res = document.getElementById('res')
     let getHostA = document.getElementById('hostA')
-    let hostA = getHostA.value.split('-')
+    let hostA = getHostA.value.split(separador[0])
     let getHostB = document.getElementById('hostB')
-    let hostB = getHostB.value.split('-')
+    let hostB = getHostB.value.split(separador[0])
     let falha = document.getElementById('falha')
     if (hostA.length < 6) {
         alert('Dados invalidos! Informe o Hostname A.\nEx: BR-CE-FLA-FLA-TP-01')
-        getHostA.value = ""
+        // getHostA.value = ""
         getHostA.focus()
     } else if (hostB.length < 6) {
         alert('Dados invalidos! Informe o Hostmane B.\nEx: BR-CE-FLA-FLA-TP-01')
-        getHostB.value = ""
+        // getHostB.value = ""
         getHostB.focus()
     } else if (falha.value.length < 4) {
         alert('Dados invalidos! Informe o tipo da falha.')
-        falha.value = ""
         falha.focus()
     } else {
         let tipoSelect = document.getElementById('tipo')
         let tipo = tipoSelect.options[tipoSelect.selectedIndex].text
-        let operaSelect = document.getElementById('opera')
-        let opera = operaSelect.options[operaSelect.selectedIndex].text
-        const lista = [hostA[2], hostB[2]]
-        const responseList = []
+        let operadoraSelect = document.getElementById('operadora')
+        let operadora = operadoraSelect.options[operadoraSelect.selectedIndex].text
+        var lista = [hostA[2], hostB[2]]
+        var responseList = []
+        var dict = {}
         fetch('js/CodigosCNL.json')
             .then(response => response.json())
             .then(data => {
-                for (h in lista) {
-                    for (let i in data) {
-                        if (data[i].SIGLA == lista[h].toUpperCase()) {
-                            responseList.push(data[i].MUNICIPIO)
+                for (h of lista) {
+                    for (i of data) {
+                        if (i.SIGLA == h.toUpperCase()) {
+                            responseList.push(i.MUNICIPIO)
+                            dict[i.MUNICIPIO] = i.UF
                         }
                     }
                 }
-                let sites = [
-                    `${responseList[0]} ${hostA[3].toUpperCase()}`,
-                    `${responseList[1]} ${hostB[3].toUpperCase()}`
+                var sites = [
+                    `${responseList[0]}${separador[2]}${hostA[3].toUpperCase()}`,
+                    `${responseList[1]}${separador[2]}${hostB[3].toUpperCase()}`
                 ]
                 sites = sites.sort()
+                var site1 = sites[0].split(" ")
+                console.log(dict[site1[0]])
                 res.innerHTML = `${tipo}${separador[0]}${sites[0]}${separador[1]}${sites[1]}
-        ${separador[0]}${opera}${separador[0]}${falha.value.toUpperCase()}`
+        ${separador[0]}${operadora}${separador[0]}${falha.value.toUpperCase()}`
+
             });
     }
 }
 
+//Coletrar os itens com "required"
+const fields = document.querySelectorAll("[required]")
+
+// Pocurar eventos
+for (let field of fields) {
+    field.addEventListener("invalid", event => {
+        event.preventDefault()
+        console.log(event)
+    })
+
+}
+
+
+// Capturar o evento do botão "submit"
+document.querySelector("form").addEventListener("submit", event => {
+    event.preventDefault()
+    gerar()
+})
+
+// Copiar o texto criado
 const copyButton = document.getElementById("copyButton")
-copyButton.addEventListener('click', ()=>{
+
+copyButton.addEventListener('click', () => {
     let inputText = document.createElement('input')
     inputText.value = document.querySelector("#res").innerText
     document.body.appendChild(inputText)

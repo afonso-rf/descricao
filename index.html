@@ -6,37 +6,68 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,300&display=swap" rel="stylesheet">
     <title>Gerador de Descrições</title>
+    <link rel="icon" href="https://img.icons8.com/emoji/16/000000/raccoon.png" type="image/png">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 </head>
 
 <body>
-    <h1>Gerador de Descrições</h1>
+    <div>
+        <h1>Gerador de Descrições</h1>
+    </div>
     <div class="container">
-        <form action="" method="POST" class="main-form">
-            <select class="select-form box-style" id="tipo">
-            </select> -
-            <input class="hostname box-style" type="text" id="hostA" placeholder="Hostname A" size="23" maxlength="23" required />
-            X
-            <input class="hostname box-style" type="text" id="hostB" placeholder="Hostname B" size="23" maxlength="23" required />
-            -
-            <select class="select-form box-style" id="opera"></select> -
-            <input class="falha box-style" type="text" id="falha" placeholder="Tipo de Falha" maxlength="30" required />
+
+        <form action="">
+            <div class="form">
+                <div class="input">
+                    <input type="text"  id="tipo" />
+                    <label for="tipo">Tipo do Serviço</label>
+                </div>
+
+                <div class="input">
+                    <input class="hostname" type="text" id="hostA" pattern=".{10,}" size="23" maxlength="23"
+                        required />
+                    <label for="hostA">Hostname A</label>
+                    <span class="error"></span>
+                </div>
+
+                <div class="input host">
+                    <input class="hostname" type="text" id="hostB" size="23" maxlength="23" required pattern=".{10,}" />
+                    <label for="hostB">Hostname B</label>
+                    <span class="error"></span>
+                </div>
+
+                <div class="input">
+                    <input type="text" class="select-form" id="operadora" />
+                    <label for="operadora">Operadora</label>
+                </div>
+
+                <div class="input">
+                    <input class="falha" type="text" id="falha" pattern=".{4,}" maxlength="30" required />
+                    <label for="falha">Tipo de Falha</label>
+                    <span class="error"></span>
+                </div>
+            </div>
+            <div class="button">
+                <button class="button" type="submit" id="gerar">Gerar</button>
+                <button class="button" type="button" id="copyButton">Copy</button>
+            </div>
         </form>
+
         <div>
-            <input class="button" type="button" value="Gerar" id="gerar" onclick="gerar()"/>
-            <input class="button" type="button" value="Copy" id="copyButton"/>
-            
+
+
+
         </div>
     </div>
-    <div resultado class="resultado">
-        
-        <p  type="text" id="res"></p>
+    <div class="resultado">
+        <span class="res" id="res"></span>
     </div>
     <div>
     </div>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="js/main.js"></script>
 </body>
 
