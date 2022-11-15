@@ -1,20 +1,14 @@
-const separador = [' - ', ' <> ', '_']
+const separador = ['-', '<>', '_', ' ']
 
-$(function () {
-    var tipo = [
-        'ROTA',
-        'ROTA DWDM',
-        'TRANSPORTE',
-        'POP',
-        'CONEXAO LOCAL',
-    ]
-    $("#tipo").autocomplete({
-        source: tipo
-    })
-})
+let tipo = [
+    'ROTA',
+    'ROTA DWDM',
+    'TRANSPORTE',
+    'POP',
+    'CONEXAO LOCAL',
+]
 
-$(function(){
-    var operadora = [
+let operadora = [
     'MOBWIRE',
     'OI',
     'TIM',
@@ -26,12 +20,20 @@ $(function(){
     'EQUINIX',
 
 ]
-$('#operadora').autocomplete({
-    source: operadora
-})
+
+$(function () {
+    $("#tipo").autocomplete({
+        source: tipo
+    })
 })
 
-tipo = tipo.sort()
+$(function () {
+    $('#operadora').autocomplete({
+        source: operadora
+    })
+})
+/*
+ tipo = tipo.sort()
 for (let n in tipo) {
     let item = document.createElement('option')
     let lista = document.querySelector('#tipo')
@@ -41,7 +43,6 @@ for (let n in tipo) {
         item.defaultSelected = true
     }
     lista.appendChild(item)
-
 }
 
 operadora = operadora.sort()
@@ -55,6 +56,7 @@ for (let o in operadora) {
     }
     lista.appendChild(item)
 }
+*/
 
 function gerar() {
     let res = document.getElementById('res')
@@ -62,23 +64,30 @@ function gerar() {
     let hostA = getHostA.value.split(separador[0])
     let getHostB = document.getElementById('hostB')
     let hostB = getHostB.value.split(separador[0])
-    let falha = document.getElementById('falha')
+    //    let falha = document.getElementById('falha')
     if (hostA.length < 6) {
         alert('Dados invalidos! Informe o Hostname A.\nEx: BR-CE-FLA-FLA-TP-01')
         // getHostA.value = ""
         getHostA.focus()
-    } else if (hostB.length < 6) {
+    }
+    else if (hostB.length < 6) {
         alert('Dados invalidos! Informe o Hostmane B.\nEx: BR-CE-FLA-FLA-TP-01')
         // getHostB.value = ""
         getHostB.focus()
-    } else if (falha.value.length < 4) {
-        alert('Dados invalidos! Informe o tipo da falha.')
-        falha.focus()
-    } else {
-        let tipoSelect = document.getElementById('tipo')
-        let tipo = tipoSelect.options[tipoSelect.selectedIndex].text
-        let operadoraSelect = document.getElementById('operadora')
-        let operadora = operadoraSelect.options[operadoraSelect.selectedIndex].text
+    }
+    /* else if (falha.value.length < 4) {
+       alert('Dados invalidos! Informe o tipo da falha.')
+       falha.focus()
+   } */
+    else {
+        let tipoSelect = document.getElementById('tipo').value
+        if (tipo.indexOf(tipoSelect) == -1) {
+            tipoSelect = `Tipo "${tipoSelect}" não encontrado`
+        }
+        let operadorSelect = document.getElementById('operadora').value
+        if (operadora.indexOf(operadorSelect) == -1) {
+            operadorSelect = `Operadora "${operadorSelect}" não encontrada`//.options[operadoraSelect.selectedIndex].text
+        }
         var lista = [hostA[2], hostB[2]]
         var responseList = []
         var dict = {}
@@ -100,8 +109,8 @@ function gerar() {
                 sites = sites.sort()
                 var site1 = sites[0].split(" ")
                 console.log(dict[site1[0]])
-                res.innerHTML = `${tipo}${separador[0]}${sites[0]}${separador[1]}${sites[1]}
-        ${separador[0]}${operadora}${separador[0]}${falha.value.toUpperCase()}`
+                res.innerHTML = `${tipoSelect}${separador[0]}${sites[0]}${separador[1]}${sites[1]}
+        ${separador[0]}${operadorSelect}`//${separador[0]}${falha.value.toUpperCase()}
 
             });
     }
@@ -137,3 +146,8 @@ copyButton.addEventListener('click', () => {
     document.execCommand('copy')
     document.body.removeChild(inputText)
 })
+
+
+function buscarCNL(CNL, JSON) {
+
+}
