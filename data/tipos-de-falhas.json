@@ -1,0 +1,15 @@
+[
+    {
+        "ATENUACAO": "ATN",
+        "FALHA DE HARDWARE": "FHW",
+        "FALHA DE SOFTWARE": "FSW",
+        "FALHA NO CLIENTE": "FCL",
+        "OSCILACAO": "OSC",
+        "RUPTURA": "RUP",
+        "FALHA DE ENERGIA": "FEG",
+        "PERDA DE GERENCIA": "FGR",
+        "SUPER AQUECIMENTO": "TPA",
+        "INTERMITENCIA": "INT",
+        "TAXA DE ERRO": "TXE"
+    }
+]

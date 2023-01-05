@@ -1,119 +1,135 @@
-const separador = ['-', '<>', '_', ' ']
+const separador = ['.', '<>', '_', ' ']
 
-let tipo = [
-    'ROTA',
-    'ROTA DWDM',
-    'TRANSPORTE',
-    'POP',
-    'CONEXAO LOCAL',
-]
+const urlCnl = "data/codigos-cnl.json"
+const urlFailureTypes = "data/tipos-de-falhas.json"
+const urlPartners = "data/parceiras.json"
 
-let operadora = [
-    'MOBWIRE',
-    'OI',
-    'TIM',
-    'UMTELECOM',
-    'VIVO',
-    'EMBRATEL',
-    'TELEBRAS',
-    'MULTIVALE',
-    'EQUINIX',
+const listCnl = listJson(urlCnl)
+const listFailureTypes = listJson(urlFailureTypes)
+const listPartners = listJson(urlPartners)
 
-]
+const failureType = document.querySelector('#tipo')
+const hostnameA = document.querySelector('#hostA')
+const hostnameB = document.querySelector('#hostB')
+const partner = document.querySelector('#partner')
 
-$(function () {
-    $("#tipo").autocomplete({
-        source: tipo
+// --------------------Events------------------------------------
+failureType.addEventListener('focus', () => {
+    $(function () {
+        $("#tipo").autocomplete({
+            source: Object.keys(listFailureTypes[0])
+        })
     })
 })
+failureType.addEventListener('keyup', () => {
+})
+failureType.addEventListener('blur', () => {
+    if (failureType.value.length > 0) {
+        failureType.classList.add('incluedText')
+    }
+    if (Object.keys(listFailureTypes[0]).indexOf(failureType.value) == -1) {
+        console.log('Tipo não encontrado')
+    }
+    console.log('saiu do tipos de falhas')
+})
 
-$(function () {
-    $('#operadora').autocomplete({
-        source: operadora
+
+partner.addEventListener('focus', () => {
+    $(function () {
+        $('#partner').autocomplete({
+            source: listPartners
+        })
     })
 })
-/*
- tipo = tipo.sort()
-for (let n in tipo) {
-    let item = document.createElement('option')
-    let lista = document.querySelector('#tipo')
-    item.value = `na${n}`
-    item.text = tipo[n].toUpperCase()
-    if (tipo[n] == 'ROTA') {
-        item.defaultSelected = true
+partner.addEventListener('keyup', () => {
+    
+})
+partner.addEventListener('blur', () => {
+    if (partner.value.length > 0 ){
+        partner.classList.add('incluedText')
     }
-    lista.appendChild(item)
+    if (listPartners.indexOf(partner.value) == -1) {
+        console.log('Parceiro não encontrado')
+    }
+    console.log('saiu de parceiros')
+})
+
+
+hostnameA.addEventListener('keyup', () => {
+
+})
+hostnameA.addEventListener('blur', () => {
+    if (hostnameA.value.length > 0 ){
+        hostnameA.classList.add('incluedText')
+    }
+    
+    console.log('saiu de hostnameA')
+})
+
+hostnameB.addEventListener('keyup', () => {
+
+})
+hostnameB.addEventListener('blur', () => {
+    if (hostnameB.value.length > 0 ){
+        hostnameB.classList.add('incluedText')
+    }
+    
+    console.log('saiu de hostnameB')
+})
+
+////-------------------Functions---------------------------////
+
+function listJson(URL) {
+    let list = []
+    fetch(URL).then(resp => resp.json()).then(data => {
+        for (item of data) {
+            list.push(item)
+        }
+    })
+    return list
 }
 
-operadora = operadora.sort()
-for (let o in operadora) {
-    let item = document.createElement('option')
-    let lista = document.querySelector('#operadora')
-    item.value = `op${o}`
-    item.text = operadora[o].toUpperCase()
-    if (operadora[o] == 'MOBWIRE') {
-        item.defaultSelected = true
-    }
-    lista.appendChild(item)
-}
-*/
 
 function gerar() {
     let res = document.getElementById('res')
-    let getHostA = document.getElementById('hostA')
-    let hostA = getHostA.value.split(separador[0])
-    let getHostB = document.getElementById('hostB')
-    let hostB = getHostB.value.split(separador[0])
-    //    let falha = document.getElementById('falha')
-    if (hostA.length < 6) {
-        alert('Dados invalidos! Informe o Hostname A.\nEx: BR-CE-FLA-FLA-TP-01')
-        // getHostA.value = ""
-        getHostA.focus()
-    }
-    else if (hostB.length < 6) {
-        alert('Dados invalidos! Informe o Hostmane B.\nEx: BR-CE-FLA-FLA-TP-01')
-        // getHostB.value = ""
-        getHostB.focus()
-    }
-    /* else if (falha.value.length < 4) {
-       alert('Dados invalidos! Informe o tipo da falha.')
-       falha.focus()
-   } */
-    else {
-        let tipoSelect = document.getElementById('tipo').value
-        if (tipo.indexOf(tipoSelect) == -1) {
-            tipoSelect = `Tipo "${tipoSelect}" não encontrado`
-        }
-        let operadorSelect = document.getElementById('operadora').value
-        if (operadora.indexOf(operadorSelect) == -1) {
-            operadorSelect = `Operadora "${operadorSelect}" não encontrada`//.options[operadoraSelect.selectedIndex].text
-        }
-        var lista = [hostA[2], hostB[2]]
-        var responseList = []
-        var dict = {}
-        fetch('js/CodigosCNL.json')
-            .then(response => response.json())
-            .then(data => {
-                for (h of lista) {
-                    for (i of data) {
-                        if (i.SIGLA == h.toUpperCase()) {
-                            responseList.push(i.MUNICIPIO)
-                            dict[i.MUNICIPIO] = i.UF
-                        }
-                    }
-                }
-                var sites = [
-                    `${responseList[0]}${separador[2]}${hostA[3].toUpperCase()}`,
-                    `${responseList[1]}${separador[2]}${hostB[3].toUpperCase()}`
-                ]
-                sites = sites.sort()
-                var site1 = sites[0].split(" ")
-                console.log(dict[site1[0]])
-                res.innerHTML = `${tipoSelect}${separador[0]}${sites[0]}${separador[1]}${sites[1]}
-        ${separador[0]}${operadorSelect}`//${separador[0]}${falha.value.toUpperCase()}
+    let hostA = document.getElementById('hostA').value
+    hostA = hostA.split(separador[0])
+    let hostB = document.getElementById('hostB').value
+    hostB = hostB.split(separador[0])
 
-            });
+
+    let tipoSelect = document.getElementById('tipo').value
+    if (tipo.indexOf(tipoSelect) == -1) {
+        tipoSelect = `Tipo "${tipoSelect}" não encontrado`
     }
+    let operadorSelect = document.getElementById('partners').value
+    if (partners.indexOf(operadorSelect) == -1) {
+        operadorSelect = `partners"${operadorSelect}" não encontrada`//.options[partnerselect.selectedIndex].text
+    }
+    let lista = [
+        hostA[1].length > 2 ? hostA[1] : hostA[2],
+        hostB[1].length > 2 ? hostB[1] : hostB[2]
+    ]
+
+    let responseList = []
+    let dict = {}
+    for (h of lista) {
+        for (i of listCnl) {
+            if (i.SIGLA == h.toUpperCase()) {
+                responseList.push(i.MUNICIPIO)
+                dict[i.MUNICIPIO] = i.UF
+            }
+        }
+    }
+    let sites = [
+        `${responseList[0]}${separador[2]}${hostA[3].toUpperCase()}`,
+        `${responseList[1]}${separador[2]}${hostB[3].toUpperCase()}`
+    ]
+    sites = sites.sort()
+    let site1 = sites[0].split(" ")
+    console.log(dict[site1[0]])
+    res.innerText = `${tipoSelect}${separador[3]}${sites[0]}${separador[1]}${sites[1]}
+        ${separador[3]}${operadorSelect}`//${separador[0]}${falha.value.toUpperCase()}
 }
 
 //Coletrar os itens com "required"
@@ -125,9 +141,11 @@ for (let field of fields) {
         event.preventDefault()
         console.log(event)
     })
-
 }
 
+
+
+function spanError(ELEMT, EVENT) { }
 
 // Capturar o evento do botão "submit"
 document.querySelector("form").addEventListener("submit", event => {
@@ -146,8 +164,3 @@ copyButton.addEventListener('click', () => {
     document.execCommand('copy')
     document.body.removeChild(inputText)
 })
-
-
-function buscarCNL(CNL, JSON) {
-
-}

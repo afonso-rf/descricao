@@ -2,7 +2,7 @@
     --primary-color: #fd951f;
     --bg-color: #130f0d;
     --text-color: #cfcfe2;
-    --light-color: rgba(255, 255, 255, 0.04);
+    --light-color: #ffffff0a;
 }
 
 * {
@@ -25,7 +25,7 @@ body {
 
 }
 
-div h1 {
+h1 {
     width: 100%;
     max-width: 600px;
     margin: 40px auto 10px auto;
@@ -40,11 +40,10 @@ div h1 {
 .container {
     width: 100%;
     max-width: 1000px;
-
     margin: 10px auto;
     padding: 20px 10px;
-
-    background-color: rgba(15, 15, 80, 0.87);
+    background-color: #0f0f50de;
+    border-radius: 10px;
 }
 
 form {
@@ -55,6 +54,7 @@ form {
 
     display: flex;
     flex-direction: column;
+    border-radius: 10px;
 
 
 }
@@ -71,25 +71,11 @@ div.form {
 div.input,
 div.select {
     width: 250px;
-
     margin: 10px 3px 20px 3px;
-
     position: relative;
 }
 
 
-div.resultado {
-    width: 100%;
-    max-width: 900px;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    height: 40px;
-    padding: 10px 10px 20px 20px;
-    border: 1px solid rgba(128, 128, 128, 0.808);
-    background-color: rgba(158, 158, 158, 0.493);
-    
-}
 
 input,
 select,
@@ -98,19 +84,22 @@ button {
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
-
-    /* Box */
-    width: 100%;
-
-    padding: 5px 0;
-
     border: none;
-    border-bottom: 0.15em solid var(--primary-color);
     background: none;
     background-color: trasnparent;
+}
 
+input,
+select,
+.button button
+    {
+    /* Box */
+    width: 100%;
+    padding: 5px 0;
+    border-bottom: 0.15em solid var(--primary-color);
+    
     outline: none;
-
+    
     /* Text */
     color: var(--text-color);
     font-size: 1em;
@@ -118,15 +107,15 @@ button {
 
 }
 
-div.button {
-    text-align: center;
+.button {
+    text-align: right;
     
 }
 
-button.button {
+#gerar {
     margin-left: 10px;
-    margin-right: 10px;
-
+    margin-right: 50px;
+    
 }
 
 select:active {
@@ -135,7 +124,7 @@ select:active {
 }
 
 
-button {
+.button button {
     width: 70px;
     margin-top: 16px;
     
@@ -144,13 +133,13 @@ button {
     border-radius: 5px;
 }
 
-button:hover {
+.button button:hover {
     background-color: #c77312;
     transition: 0.2s;
     cursor: pointer;
 }
-button:active {
-    background-color:rgb(10, 94, 10);
+.button button:active {
+    background-color:#3cad0bce;
     box-shadow: 1px 1px 1px 0 rgba(44, 43, 43, 0.747);
 }
 
@@ -158,52 +147,117 @@ input~label {
     position: absolute;
     top: 6px;
     left: 0;
-
     color: rgba(218, 210, 210, 0.377);
-
     transition: 0.4s;
 
 }
 
-
-
 input:focus{
-    border-bottom: 0.15em solid rgb(238, 107, 0);
-
-    transition: 0.4s;
+    border-bottom: 0.15em solid #ee6b00;
+    
+    transition: 0.5s;
 }
 
 input:focus~label,
-input:hover~label
+input:hover~label, 
+.incluedText ~ label
 {
     transform: translateY(-24px);
     font-size: 0.8em;
     letter-spacing: 0.1em;
 }
 
+
 .input span.error {
     display: flex;
-
     padding: 0;
-    color: rgb(252, 66, 66);
+    color: #fc4242;
     background-color: rgba(255, 0, 0, 0.158);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .input span.error.active {
-    border: 1px solid rgba(255, 0, 0, 0.062);
-    padding: 0.4em;
+    border: 1px solid #ff000010;
+    padding: 0.2em;
+}
+
+.resultado {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
+    /* padding: 10px 10px 20px 20px; */
+    border: 1px solid #808080ce;
+    background-color: #9e9e9e7e;
+    border-radius: 10px;
+    
+}
+
+.copy {
+    display: flex;
+    position: absolute;
+    top: 6px;
+    right: 5px;
+    cursor: pointer;
+    
+}
+.copy:active {
+    /* background-color: green; */
+    transform: scale(0.9);
+    transition: 100ms ease-in-out;
+}
+
+.copy:hover::after {
+    content: "copy";
+    position:absolute;
+    left: 33px;
+    padding: 3px;
+    border-radius: 5px;
+    color: #ffffff;
+
+    background-color: #888787d7;
+    transition: 300ms all;
+    
+}
+
+.copy.active::after {
+    content: "copyed";
+    position:absolute;
+    left: 35px;
+    padding: 3px;
+    border-radius: 5px;
+    color: #ffffff;
+
+    background-color: #04c004c4;
+	-webkit-animation: rotate-out-center 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	        animation: rotate-out-center 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+
+}
+
+.copy img {
+        height: 25px;
+       
+        
 }
 
 
+/* Responsividade */
 @media screen and (max-width: 750px) {
     div h1 {
-    
+        
         max-width: 500px;
     }
     .container {
         max-width: 500px;
     }
-
+    
     div.form {
         display: flex;
         flex-direction: column;
