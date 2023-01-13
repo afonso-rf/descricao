@@ -214,7 +214,7 @@ input:hover~label,
     transition: 100ms ease-in-out;
 }
 
-.copy:hover::after {
+.copy:hover::before {
     content: "copy";
     position:absolute;
     left: 33px;

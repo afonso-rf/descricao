@@ -1,4 +1,4 @@
-const separador = ['.', '<>', '_', ' ']
+const separador = ['.', '<>', '_', '::']
 
 const urlCnl = "data/codigos-cnl.json"
 const urlFailureTypes = "data/tipos-de-falhas.json"
@@ -12,8 +12,9 @@ const failureType = document.querySelector('#tipo')
 const hostnameA = document.querySelector('#hostA')
 const hostnameB = document.querySelector('#hostB')
 const partner = document.querySelector('#partner')
+const response = document.querySelector('#response')
 
-// --------------------Events------------------------------------
+////--------------------Events------------------------------------
 failureType.addEventListener('focus', () => {
     $(function () {
         $("#tipo").autocomplete({
@@ -22,6 +23,7 @@ failureType.addEventListener('focus', () => {
     })
 })
 failureType.addEventListener('keyup', () => {
+
 })
 failureType.addEventListener('blur', () => {
     if (failureType.value.length > 0) {
@@ -30,10 +32,26 @@ failureType.addEventListener('blur', () => {
     if (Object.keys(listFailureTypes[0]).indexOf(failureType.value) == -1) {
         console.log('Tipo não encontrado')
     }
-    console.log('saiu do tipos de falhas')
 })
-
-
+//
+hostnameA.addEventListener('keyup', () => {
+    
+})
+hostnameA.addEventListener('blur', () => {
+    if (hostnameA.value.length > 0) {
+        hostnameA.classList.add('incluedText')
+    }
+})
+//
+hostnameB.addEventListener('keyup', () => {
+    
+})
+hostnameB.addEventListener('blur', () => {
+    if (hostnameB.value.length > 0) {
+        hostnameB.classList.add('incluedText')
+    }
+})
+//
 partner.addEventListener('focus', () => {
     $(function () {
         $('#partner').autocomplete({
@@ -42,42 +60,19 @@ partner.addEventListener('focus', () => {
     })
 })
 partner.addEventListener('keyup', () => {
-    
+
 })
 partner.addEventListener('blur', () => {
-    if (partner.value.length > 0 ){
+    if (partner.value.length > 0) {
         partner.classList.add('incluedText')
     }
     if (listPartners.indexOf(partner.value) == -1) {
         console.log('Parceiro não encontrado')
     }
-    console.log('saiu de parceiros')
 })
+////-----------------------------------------------------
 
-
-hostnameA.addEventListener('keyup', () => {
-
-})
-hostnameA.addEventListener('blur', () => {
-    if (hostnameA.value.length > 0 ){
-        hostnameA.classList.add('incluedText')
-    }
-    
-    console.log('saiu de hostnameA')
-})
-
-hostnameB.addEventListener('keyup', () => {
-
-})
-hostnameB.addEventListener('blur', () => {
-    if (hostnameB.value.length > 0 ){
-        hostnameB.classList.add('incluedText')
-    }
-    
-    console.log('saiu de hostnameB')
-})
-
-////-------------------Functions---------------------------////
+////-------------------Functions---------------------------
 
 function listJson(URL) {
     let list = []
@@ -89,50 +84,39 @@ function listJson(URL) {
     return list
 }
 
-
 function gerar() {
-    let res = document.getElementById('res')
+    let failureType = document.querySelector('#tipo').value
     let hostA = document.getElementById('hostA').value
-    hostA = hostA.split(separador[0])
     let hostB = document.getElementById('hostB').value
-    hostB = hostB.split(separador[0])
+    let selectPartner = document.querySelector('#partner').value
+    
+    let res = document.getElementById('response')
 
+    let hostnames = [ hostA.split(separador[0]), hostB.split(separador[0])]
 
-    let tipoSelect = document.getElementById('tipo').value
-    if (tipo.indexOf(tipoSelect) == -1) {
-        tipoSelect = `Tipo "${tipoSelect}" não encontrado`
-    }
-    let operadorSelect = document.getElementById('partners').value
-    if (partners.indexOf(operadorSelect) == -1) {
-        operadorSelect = `partners"${operadorSelect}" não encontrada`//.options[partnerselect.selectedIndex].text
-    }
-    let lista = [
-        hostA[1].length > 2 ? hostA[1] : hostA[2],
-        hostB[1].length > 2 ? hostB[1] : hostB[2]
-    ]
+    let pops = []
 
-    let responseList = []
-    let dict = {}
-    for (h of lista) {
+    for (h of hostnames) {
         for (i of listCnl) {
-            if (i.SIGLA == h.toUpperCase()) {
-                responseList.push(i.MUNICIPIO)
-                dict[i.MUNICIPIO] = i.UF
+            if (i.SIGLA == (h[1].length > 2 ? h[1]: h[2]).toUpperCase()) {
+                i.POP = (h[1].length > 2 ? h[2] : h[3]).toUpperCase()
+                pops.push(i)
             }
         }
     }
-    let sites = [
-        `${responseList[0]}${separador[2]}${hostA[3].toUpperCase()}`,
-        `${responseList[1]}${separador[2]}${hostB[3].toUpperCase()}`
-    ]
-    sites = sites.sort()
-    let site1 = sites[0].split(" ")
-    console.log(dict[site1[0]])
-    res.innerText = `${tipoSelect}${separador[3]}${sites[0]}${separador[1]}${sites[1]}
-        ${separador[3]}${operadorSelect}`//${separador[0]}${falha.value.toUpperCase()}
+
+    pops.sort((a, b)=>{
+        return a.MUNICIPIO + a.POP < b.MUNICIPIO + b.POP ? -1 : a.MUNICIPIO + a.POP > b.MUNICIPIO + b.POP ? 1 : 0
+    })
+
+    res.innerText = `${pops[0].UF}${separador[3]}${listFailureTypes[0][failureType]}${separador[3]}`+
+    `${pops[0].MUNICIPIO}${separador[2]}${pops[0].POP}${separador[1]}`+
+    `${pops[1].MUNICIPIO}${separador[2]}${pops[1].POP}${separador[3]}${selectPartner}`
 }
 
-//Coletrar os itens com "required"
+////---------------------------------------------------
+
+// Coletrar os itens com "required"
 const fields = document.querySelectorAll("[required]")
 
 // Pocurar eventos
@@ -142,10 +126,6 @@ for (let field of fields) {
         console.log(event)
     })
 }
-
-
-
-function spanError(ELEMT, EVENT) { }
 
 // Capturar o evento do botão "submit"
 document.querySelector("form").addEventListener("submit", event => {
@@ -157,10 +137,12 @@ document.querySelector("form").addEventListener("submit", event => {
 const copyButton = document.getElementById("copyButton")
 
 copyButton.addEventListener('click', () => {
+    copyButton.classList.remove('active')
     let inputText = document.createElement('input')
-    inputText.value = document.querySelector("#res").innerText
+    inputText.value = document.querySelector("#response").innerText
     document.body.appendChild(inputText)
     inputText.select()
     document.execCommand('copy')
     document.body.removeChild(inputText)
+    copyButton.classList.add('active')
 })
