@@ -1,5 +1,8 @@
 :root {
     --primary-color: #fd951f;
+    --second-color: #D51019;
+    --third-color: #1F335C;
+    --bg-color-1: #E9E9E9;
     --bg-color: #130f0d;
     --text-color: #cfcfe2;
     --light-color: #ffffff0a;
@@ -20,21 +23,21 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-
+    background-color: var(--bg-color-1);
 
 
 }
 
 h1 {
     width: 100%;
-    max-width: 600px;
-    margin: 40px auto 10px auto;
+    max-width: 1000px;
+    margin: 50px auto 10px auto;
     padding: 10px 0px;
-    background-color: rgb(184, 17, 17);
+    background-color: var(--second-color);
     text-align: center;
     border: none;
     border-radius: 10px;
-    color: #eeeeee;
+    color: var(--text-color);
 }
 
 .container {
@@ -42,12 +45,12 @@ h1 {
     max-width: 1000px;
     margin: 10px auto;
     padding: 20px 10px;
-    background-color: #0f0f50de;
+    background: linear-gradient(to top left, var(--third-color), var(--second-color) 120%);
     border-radius: 10px;
 }
 
 form {
-    background: rgba(255, 255, 255, 0.11);
+    background: rgba(1, 1, 1, 0.2);
     width: 100%;
 
     padding: 20px;
@@ -59,14 +62,11 @@ form {
 
 }
 
-
 div.form {
     min-height: 80px;
     display: flex;
     flex-direction: row;
 }
-
-
 
 div.input,
 div.select {
@@ -74,8 +74,6 @@ div.select {
     margin: 10px 3px 20px 3px;
     position: relative;
 }
-
-
 
 input,
 select,
@@ -106,6 +104,9 @@ select,
     text-transform: uppercase;
 
 }
+[disabled]{
+    border-bottom: 0.15em solid var(--light-color);
+}
 
 .button {
     text-align: right;
@@ -114,7 +115,7 @@ select,
 
 #gerar {
     margin-left: 10px;
-    margin-right: 50px;
+    margin-right: 60px;
     
 }
 
@@ -122,7 +123,6 @@ select:active {
     background: rgba(0, 0, 0, 0.575);
     
 }
-
 
 .button button {
     width: 70px;
@@ -147,7 +147,7 @@ input~label {
     position: absolute;
     top: 6px;
     left: 0;
-    color: rgba(218, 210, 210, 0.377);
+    color: #dad2d260;
     transition: 0.4s;
 
 }
@@ -167,18 +167,13 @@ input:hover~label,
     letter-spacing: 0.1em;
 }
 
-
 .input span.error {
     display: flex;
+    position: absolute;
     padding: 0;
     color: #fc4242;
-    background-color: rgba(255, 0, 0, 0.158);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-}
-
-.input span.error.active {
-    border: 1px solid #ff000010;
     padding: 0.2em;
 }
 
@@ -190,10 +185,10 @@ input:hover~label,
     width: 100%;
     max-width: 900px;
     text-align: center;
+    font-size: 13pt;
     margin-left: auto;
     margin-right: auto;
     height: 40px;
-    /* padding: 10px 10px 20px 20px; */
     border: 1px solid #808080ce;
     background-color: #9e9e9e7e;
     border-radius: 10px;
@@ -209,7 +204,6 @@ input:hover~label,
     
 }
 .copy:active {
-    /* background-color: green; */
     transform: scale(0.9);
     transition: 100ms ease-in-out;
 }
@@ -242,11 +236,28 @@ input:hover~label,
 }
 
 .copy img {
-        height: 25px;
-       
-        
+        height: 25px;        
 }
 
+/* Tabelas */
+.sites  {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+    margin-left: auto;
+}
+
+.sites table {
+    border: 1px solid var(--third-color);
+    border-radius: 10px;
+    }
+table td {
+    border-top: 1px solid var(--text-color);
+    border-left: 1px solid var(--text-color);
+    padding: 0 10px;
+    border-top-left-radius: 3px;
+}
 
 /* Responsividade */
 @media screen and (max-width: 750px) {
@@ -259,16 +270,14 @@ input:hover~label,
     }
     
     div.form {
-        display: flex;
         flex-direction: column;
         
     }
 
-    div.input,
-    div.select {
+    div.input {
         width: 100%;
-
     }
+
     div.resultado {
         
         max-width: 500px;
@@ -276,10 +285,9 @@ input:hover~label,
 
         padding-top: 40px;
     }
-    button {
-        width: 100%;
-        position: none;
-        margin-bottom: 10px;
+
+    .sites  {
+     flex-direction: column;
     }
 }
 
@@ -310,9 +318,5 @@ input:hover~label,
 
         padding-top: 40px;
     }
-    button {
-        width: 100%;
-        position: none;
-        margin-bottom: 10px;
-    }
+
 }

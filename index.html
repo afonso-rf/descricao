@@ -23,28 +23,26 @@
                 <form action="">
                     <div class="form">
                         <div class="input">
-                            <input type="text" id="tipo" required/>
+                            <input type="text" id="tipo" required />
                             <label for="tipo">Tipo de Falha</label>
                             <span class="error"></span>
                         </div>
 
-                        <div class="input">
-                            <input class="hostname" type="text" id="hostA" size="23" maxlength="23"
-                                required />
+                        <div class="input hostname">
+                            <input type="text" id="hostA" size="23" maxlength="23" required />
                             <label for="hostA">Hostname A</label>
                             <span class="error"></span>
                         </div>
 
-                        <div class="input host">
-                            <input class="hostname" type="text" id="hostB" size="23" maxlength="23" required
-                                pattern=".{10,}" />
+                        <div class="input hostname">
+                            <input type="text" id="hostB" size="23" maxlength="23" required />
                             <label for="hostB">Hostname B</label>
                             <span class="error"></span>
                         </div>
 
                         <div class="input">
-                            <input type="text" class="select-form" id="partner" required/>
-                            <label for="partner">Operadora</label>
+                            <input type="text" class="select-form" id="partner" required />
+                            <label for="partner">Parceiro</label>
                             <span class="error"></span>
                         </div>
 
@@ -55,13 +53,13 @@
                 </form>
 
             </div>
-            <div class="resultado">
+            <code class="resultado">
                 <span id="response"></span>
                 <button type="button" class="copy" id="copyButton">
                     <img src="image/copy.svg" alt="copy">
                 </button>
                 
-            </div>
+            </code>
             <div class="sites"></div>
 
         </section>

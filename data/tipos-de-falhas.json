@@ -10,6 +10,7 @@
         "RUPTURA": "RUP",
         "SUPER AQUECIMENTO": "TPA",
         "INTERMITENCIA": "INT",
-        "TAXA DE ERRO": "TXE"
+        "TAXA DE ERRO": "TXE",
+        "TRANSPORTE": "TRN"
     }
 ]
