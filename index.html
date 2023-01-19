@@ -6,39 +6,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/animation.css">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@1,300&display=swap" rel="stylesheet">
     <title>Gerador de Descrições</title>
+    <link rel="icon" href="https://img.icons8.com/emoji/16/000000/raccoon.png" type="image/png">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 </head>
 
 <body>
-    <h1>Gerador de Descrições</h1>
-    <div class="container">
-        <form action="" class="main-form">
-            <select class="select-form box-style" id="tipo">
-            </select> -
-            <input class="hostname box-style" type="text" id="hostA" placeholder="Hostname A" size="23" maxlength="23"
-                required />
-            X
-            <input class="hostname box-style" type="text" id="hostB" placeholder="Hostname B" size="23" maxlength="23"
-                required />
-            -
-            <select class="select-form box-style" id="opera"></select>
-           <!-- <input class="falha box-style" type="text" id="falha" placeholder="Tipo de Falha" maxlength="30" required /> -->
-        </form>
-        <div>
-            <input class="button" type="button" value="Gerar" id="gerar" onclick="gerar()" />
-            <input class="button" type="button" value="Copy" id="copyButton" />
+    <main>
+        <section class="description">
+            <div class="title">
+                <h1>Gerador de Descrições</h1>
+            </div>
+            <div class="container">
+                <form action="">
+                    <div class="form">
+                        <div class="input">
+                            <input type="text" id="tipo" required />
+                            <label for="tipo">Tipo de Falha</label>
+                            <span class="error"></span>
+                        </div>
 
-        </div>
-    </div>
-    <div resultado class="resultado">
+                        <div class="input hostname">
+                            <input type="text" id="hostA" size="23" maxlength="23" required />
+                            <label for="hostA">Hostname A</label>
+                            <span class="error"></span>
+                        </div>
 
-        <p type="text" id="res"></p>
-    </div>
-    <div>
-    </div>
+                        <div class="input hostname">
+                            <input type="text" id="hostB" size="23" maxlength="23" required />
+                            <label for="hostB">Hostname B</label>
+                            <span class="error"></span>
+                        </div>
+
+                        <div class="input">
+                            <input type="text" class="select-form" id="partner" required />
+                            <label for="partner">Parceiro</label>
+                            <span class="error"></span>
+                        </div>
+
+                    </div>
+                    <div class="button">
+                        <button class="btn-gerar" type="submit" id="gerar">Gerar</button>
+                    </div>
+                </form>
+
+            </div>
+            <code class="resultado">
+                <span id="response"></span>
+                <button type="button" class="copy" id="copyButton">
+                    <img src="image/copy.svg" alt="copy">
+                </button>
+                
+            </code>
+            <div class="sites"></div>
+
+        </section>
+    </main>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="js/main.js"></script>
 </body>
 

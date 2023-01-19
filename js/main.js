@@ -1,139 +1,244 @@
-const separador = ['::', ' <> ','_']
+const separador = ['.', '<>', '_', '::']
 
-let tipo_falha = {
-    "ATENUACAO"     :     "ATN",
-    "FALHA DE HARDWARE" : "FHW",
-    "FALHA DE SOFTWARE" : "FSW",
-    "FALHA NO CLIENTE"  : "FCL",
-    "OSCILACAO"     :     "OSC",
-    "RUPTURA"       :     "RUP",
-    "FALHA DE ENERGIA"  : "FEG",
-    "PERDA DE GERENCIA" : "FGR",
-    "SUPER AQUECIMENTO"  : "TPA",
-    "INTERMITENCIA"     : "INT",
-    "TAXA DE ERRO" : "TXE",
-}
+const urlCnl = "data/codigos-cnl.json"
+const urlFailureTypes = "data/tipos-de-falhas.json"
+const urlPartners = "data/parceiras.json"
 
-let opera = [
-    "MOBWIRE",
-    "EMBRATEL",
-    "UM TELECOM",
-    "BWM",
-    "ETICE",
-    "LUMEN",
-    "BRISANET",
-    "ADL LINK",
-    "VITAL/OI",
-    "MULTIVALE",
-    "ALGAR",
-    "MEGALINK",
-    "VIVO",
-    "TIM",
-    "TELXIUS",
-    "INTERNEXA",
-    "GLOBENET",
-    "EVO TELECOM",
-    "COGENT",
-    "CODATA",
-    "SKY",
-    "TELEBRAS",
-    "WEBFOCO",
-    "ITS BRASIL",
-    "IX",
-    "GOOGLE",
-    "FACEBOOK",
-    "NETFLIX",
-    "AKAMAI",
-    "TELY",
-    "ARAUJO SAT",
-    "PONTO A PONTO",
-    "MAIS TELECOM",
-    "TV ALPHAVILLE",
-    "VIRTEX",
-    "RNP",
+const listCnl = listJson(urlCnl)
+const listFailureTypes = listJson(urlFailureTypes)
+const listPartners = listJson(urlPartners)
 
-]
+const failureType = document.querySelector('#tipo')
+const hostnameA = document.querySelector('#hostA')
+const hostnameB = document.querySelector('#hostB')
+const partner = document.querySelector('#partner')
 
-// tipo_falha = tipo_falha.sort()
-for ( n of Object.keys(tipo_falha)) {
-    let item = document.createElement('option')
-    let lista = document.querySelector('#tipo')
-    item.value = `na${n}`
-    item.text = n.toUpperCase()
-    if (tipo_falha[n] == 'RUP') {
-        item.defaultSelected = true
+////--------------------Events------------------------------------
+failureType.addEventListener('focus', (e) => {
+    $(function () {
+        $("#tipo").autocomplete({
+            source: Object.keys(listFailureTypes[0])
+        })
+    })
+})
+failureType.addEventListener('blur', (event) => {
+    let item = event.target.value.trim().toUpperCase()
+    let spanError = document.querySelector(`#${event.target.id}~span`)
+    let spanText = ''
+    if (item.length > 0) {
+        event.target.classList.add('incluedText')
     }
-    lista.appendChild(item)
-
-}
-
-opera = opera.sort()
-for (let o in opera) {
-    let item = document.createElement('option')
-    let lista = document.querySelector('#opera')
-    item.value = `op${o}`
-    item.text = opera[o].toUpperCase()
-    if (opera[o] == 'MOBWIRE') {
-        item.defaultSelected = true
+    if (item.length == 0) {
+        spanText = 'Campo Obrigatório'
+    } else if (Object.keys(listFailureTypes[0]).indexOf(item.trim()) == -1) {
+        spanText = 'Tipo Falha Não Cadastrada'
     }
-    lista.appendChild(item)
-}
 
-function gerar() {
-    let res = document.getElementById('res')
-    let getHostA = document.getElementById('hostA')
-    let hostA = getHostA.value.split('.')
-    let getHostB = document.getElementById('hostB')
-    let hostB = getHostB.value.split('.')
-    let falha = document.getElementById('falha')
-    if (hostA.length < 4) {
-        alert('Dados invalidos! Informe o Hostname A.\nEx: CE.FLA.FLA.TP01')
-        getHostA.focus()
-    } else if (hostB.length < 4) {
-        alert('Dados invalidos! Informe o Hostmane B.\nEx: CE.FLA.FLA.TP01')
-        getHostB.focus()
-    } /* else if (falha.value.length < 4) {
-        alert('Dados invalidos! Informe o tipo da falha.')
-        falha.focus()
-    }*/ else {
-        let tipoSelect = document.getElementById('tipo')
-        let tipo = tipoSelect.options[tipoSelect.selectedIndex].text
-        let operaSelect = document.getElementById('opera')
-        let opera = operaSelect.options[operaSelect.selectedIndex].text
-        const lista = [hostA[1], hostB[1]]
-        const responseList = []
-        const uf = {}
-        fetch('js/CodigosCNL.json')
-            .then(response => response.json())
-            .then(data => {
-                for (h of lista) {
-                    for (i of data) {
-                        if (i.SIGLA == h.toUpperCase()) {
-                            responseList.push(i.MUNICIPIO)
-                            uf[i.MUNICIPIO] = i.UF
-                        }
-                    }
+    event.target.setCustomValidity(spanText)
+    spanError.innerText = spanText
+
+    const hostLast = document.querySelector('.hostname~.hostname')
+    if (item.includes("FALHA")) {
+        hostnameB.disabled = true
+        hostnameB.value = ''
+        hostLast.style.display = 'none'
+    } else {
+        hostnameB.disabled = false
+        hostLast.style.display = ''
+    }
+})
+//
+partner.addEventListener('focus', () => {
+    $(function () {
+        $('#partner').autocomplete({
+            source: listPartners
+        })
+    })
+})
+partner.addEventListener('blur', (event) => {
+    let item = event.target.value.trim().toUpperCase()
+    let spanError = document.querySelector(`#${event.target.id}~span`)
+    let spanText = ''
+    if (item.length > 0) {
+        event.target.classList.add('incluedText')
+    }
+    if (item.length == 0) {
+        spanText = 'Campo Obrigatório'
+    } else if (listPartners.indexOf(item.trim()) == -1) {
+        spanText = 'Parceiro Não Cadastrado'
+    }
+    event.target.setCustomValidity(spanText)
+    spanError.innerText = spanText
+})
+//
+inputHostnameBlur(hostnameA, separador[0])
+inputHostnameBlur(hostnameB, separador[0])
+////-----------------------------------------------------
+
+////-------------------Functions---------------------------
+
+function listJson(URL) {
+    let list = []
+    fetch(URL).then(resp => resp.json()).then(data => {
+        for (item of data) {
+            list.push(item)
+        }
+    })
+    return list
+}
+//
+function inputHostnameBlur(ELEMENT, SPLIT) {
+    ELEMENT.addEventListener('blur', () => {
+        let item = ELEMENT.value.trim().toUpperCase()
+        let spanError = document.querySelector(`#${ELEMENT.id}~span`)
+        let spanText = ''
+
+        if (item.length == 0) {
+            spanText = 'Campo Obrigatório'
+        } else if (item.split(SPLIT).length < 4) {
+            spanText = `Hostmane Invalido!
+            Ex: UF${SPLIT}CNL${SPLIT}POP${SPLIT}XXX00
+            ou BR${SPLIT}UF${SPLIT}CNL${SPLIT}POP${SPLIT}XX${SPLIT}00`
+        }
+
+        spanError.innerText = spanText
+        ELEMENT.setCustomValidity(spanText)
+
+        if (item.length > 0) {
+            ELEMENT.classList.add('incluedText')
+        }
+    })
+}
+//
+function popSearchCNL(HOST, JSON, SPLIT) {
+    let host = HOST.split(SPLIT)
+    let pop = {}
+
+    if (host.length > 2) {
+        pop.POP = host[1].length > 2 ? host[2] : host[3]
+        for (let i of JSON) {
+            try {
+                if (i.SIGLA === (host[1].length > 2 ? host[1] : host[2])) {
+                    pop.UF = i.UF
+                    pop.SIGLA = i.SIGLA
+                    pop.MUNICIPIO = i.MUNICIPIO
                 }
-                let sites = [
-                    
-                    `${responseList[0]}${separador[2]}${hostA[2].toUpperCase()}`,
-                    `${responseList[1]}${separador[2]}${hostB[2].toUpperCase()}`
-                ]
-                sites = sites.sort()
-                const siteA = sites[0].split(separador[2])
-                const siteUf = uf[siteA[0]]
-                res.innerHTML = 
-                `${siteUf}${separador[0]}${tipo_falha[tipo]}${separador[0]}${sites[0]}${separador[1]}${sites[1]}${separador[0]}${opera}`
-            });
+                console.log(erro)
+            } catch (erro) {
+            }
+        }
+    }
+    return pop
+}
+//
+function tableSites(OBJ) {
+    try {
+        return `<tr>
+        <td>UF</td>
+        <td>${OBJ.UF}</td>
+    </tr>
+    <tr>
+        <td>MUNICIPIO</td>
+        <td>${OBJ.MUNICIPIO}</td>
+    </tr>
+    <tr>
+        <td>SIGLA</td>
+        <td>${OBJ.SIGLA}</td>
+    </tr>
+    <tr>
+        <td>POP</td>
+        <td>${OBJ.POP}</td>
+    </tr>
+    `
+    } catch { }
+}
+//
+function gerar() {
+    const failure = failureType.value.trim().toUpperCase()
+    const hostA = hostnameA.value.trim().toUpperCase()
+    const hostB = hostnameB.value.trim().toUpperCase()
+    const selectPartner = partner.value.trim().toUpperCase()
+    const response = document.getElementById('response')
+    const sites = document.querySelector('.sites')
+
+    let pops = [popSearchCNL(hostA, listCnl, separador[0]), popSearchCNL(hostB, listCnl, separador[0])]
+    pops.sort((a, b) => {
+        return a.MUNICIPIO + a.POP < b.MUNICIPIO + b.POP ? -1 : a.MUNICIPIO + a.POP > b.MUNICIPIO + b.POP ? 1 : 0
+    })
+    if (failure.includes('FALHA')) {
+        if (failure.includes('ENERGIA')) {
+            response.innerText = `${pops[0].UF}${separador[3]}` +
+                `${listFailureTypes[0][failure]}${separador[3]}` +
+                `${pops[0].MUNICIPIO}${separador[2]}${pops[0].POP}${separador[1]}` +
+                `${pops[0].UF}${separador[0]}${pops[0].SIGLA}${separador[0]}${pops[0].POP}${separador[3]}` +
+                `${selectPartner}`
+        } else {
+            response.innerText = `${pops[0].UF}${separador[3]}` +
+                `${listFailureTypes[0][failure]}${separador[3]}` +
+                `${pops[0].MUNICIPIO}${separador[2]}${pops[0].POP}${separador[1]}` +
+                `${hostA}${separador[3]}` +
+                `${selectPartner}`
+        }
+    } else {
+        response.innerText = `${pops[0].UF}${separador[3]}` +
+            `${listFailureTypes[0][failure]}${separador[3]}` +
+            `${pops[0].MUNICIPIO}${separador[2]}${pops[0].POP}${separador[1]}` +
+            `${pops[1].MUNICIPIO}${separador[2]}${pops[1].POP}${separador[3]}` +
+            `${selectPartner}`
+    }
+    sites.innerHTML = ''
+    for (i in pops) {
+        if (pops[i].UF) {
+            if (i == 0) {
+                sites.innerHTML += `<table>
+                <tr>
+                    <th colspan="2">PONTA A</th>
+                </tr>
+                ${tableSites(pops[i])}
+                </table>`
+            } else {
+                sites.innerHTML += `<table>
+                <tr>
+                    <th colspan="2">PONTA B</th>
+                </tr>
+                ${tableSites(pops[i])}
+                </table>`
+            }
+        }
     }
 }
 
+////---------------------------------------------------
+
+// Coletrar os itens com "required"
+const fields = document.querySelectorAll("[required]")
+
+// Pocurar eventos
+for (let field of fields) {
+    field.addEventListener("invalid", event => {
+        event.preventDefault()
+        console.log(event)
+        document.getElementById('response').innerText = ''
+        document.querySelector('.sites').innerHTML = ''
+    })
+}
+
+// Capturar o evento do botão "submit"
+document.querySelector("form").addEventListener("submit", event => {
+    event.preventDefault()
+    gerar()
+})
+
+// Copiar o texto criado
 const copyButton = document.getElementById("copyButton")
+
 copyButton.addEventListener('click', () => {
+    copyButton.classList.remove('active')
     let inputText = document.createElement('input')
-    inputText.value = document.querySelector("#res").innerText
+    inputText.value = document.querySelector("#response").innerText
     document.body.appendChild(inputText)
     inputText.select()
     document.execCommand('copy')
     document.body.removeChild(inputText)
+    copyButton.classList.add('active')
 })
