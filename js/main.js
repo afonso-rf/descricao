@@ -14,12 +14,13 @@ const hostnameB = document.querySelector('#hostB')
 const partner = document.querySelector('#partner')
 
 ////--------------------Events------------------------------------
-failureType.addEventListener('focus', (e) => {
-    $(function () {
-        $("#tipo").autocomplete({
-            source: Object.keys(listFailureTypes[0])
-        })
-    })
+failureType.addEventListener('focus', () =>{
+    let datalist = document.querySelector('#failure-types')
+    if (datalist.innerHTML == ''){
+    for(i of Object.keys(listFailureTypes[0])){
+        datalist.innerHTML += `<option value="${i}">` 
+    }
+}
 })
 failureType.addEventListener('blur', (event) => {
     let item = event.target.value.trim().toUpperCase()
@@ -49,11 +50,12 @@ failureType.addEventListener('blur', (event) => {
 })
 //
 partner.addEventListener('focus', () => {
-    $(function () {
-        $('#partner').autocomplete({
-            source: listPartners
-        })
-    })
+    let datalist = document.querySelector('#partners')
+   if(datalist.innerHTML == ''){
+    for(i of listPartners){
+        datalist.innerHTML += `<option value="${i}">`
+    }
+   }
 })
 partner.addEventListener('blur', (event) => {
     let item = event.target.value.trim().toUpperCase()

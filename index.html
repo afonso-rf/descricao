@@ -11,6 +11,7 @@
     <title>Gerador de Descrições</title>
     <link rel="icon" href="https://img.icons8.com/emoji/16/000000/raccoon.png" type="image/png">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="js/main.js" defer></script>
 </head>
 
 <body>
@@ -23,27 +24,29 @@
                 <form action="">
                     <div class="form">
                         <div class="input">
-                            <input type="text" id="tipo" required />
+                            <input list="failure-types" id="tipo" required autocomplete="off" />
                             <label for="tipo">Tipo de Falha</label>
                             <span class="error"></span>
+                            <datalist id="failure-types"></datalist>
                         </div>
 
                         <div class="input hostname">
-                            <input type="text" id="hostA" size="23" maxlength="23" required />
+                            <input type="text" id="hostA" size="23" maxlength="23" required autocomplete="off" />
                             <label for="hostA">Hostname A</label>
                             <span class="error"></span>
                         </div>
 
                         <div class="input hostname">
-                            <input type="text" id="hostB" size="23" maxlength="23" required />
+                            <input type="text" id="hostB" size="23" maxlength="23" required autocomplete="off" />
                             <label for="hostB">Hostname B</label>
                             <span class="error"></span>
                         </div>
 
                         <div class="input">
-                            <input type="text" class="select-form" id="partner" required />
+                            <input list="partners" class="select-form" id="partner" required autocomplete="off" />
                             <label for="partner">Parceiro</label>
                             <span class="error"></span>
+                            <datalist id="partners"></datalist>
                         </div>
 
                     </div>
@@ -64,9 +67,7 @@
 
         </section>
     </main>
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <script src="js/main.js"></script>
+
 </body>
 
 </html>
