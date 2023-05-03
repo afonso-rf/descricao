@@ -218,8 +218,11 @@ const fields = document.querySelectorAll("[required]")
 // Pocurar eventos
 for (let field of fields) {
     field.addEventListener("invalid", event => {
+        const spanError = document.querySelector(`#${event.target.id}~span`)
         event.preventDefault()
-        console.log(event)
+        if (spanError.innerText == '') {
+            spanError.innerText = 'Preencha esse campo'
+        }
         document.getElementById('response').innerText = ''
         document.querySelector('.sites').innerHTML = ''
     })
