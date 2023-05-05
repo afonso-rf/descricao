@@ -162,7 +162,7 @@ function gerar() {
     const selectPartner = partner.value.trim().toUpperCase()
     const response = document.getElementById('response')
     const sites = document.querySelector('.sites')
-
+    const fiber = document.querySelector('input[type="radio"]:checked').value
     let pops = [popSearchCNL(hostA, listCnl, separador[0]), popSearchCNL(hostB, listCnl, separador[0])]
     pops.sort((a, b) => {
         return a.MUNICIPIO + a.POP < b.MUNICIPIO + b.POP ? -1 : a.MUNICIPIO + a.POP > b.MUNICIPIO + b.POP ? 1 : 0
@@ -179,14 +179,14 @@ function gerar() {
                 `${listFailureTypes[0][failure]}${separador[3]}` +
                 `${pops[0].MUNICIPIO}${separador[2]}${pops[0].POP}${separador[1]}` +
                 `${hostA}${separador[3]}` +
-                `${selectPartner}`
+                `${fiber}${separador[3]}${selectPartner}`
         }
     } else {
         response.innerText = `${pops[0].UF}${separador[3]}` +
             `${listFailureTypes[0][failure]}${separador[3]}` +
             `${pops[0].MUNICIPIO}${separador[2]}${pops[0].POP}${separador[1]}` +
             `${pops[1].MUNICIPIO}${separador[2]}${pops[1].POP}${separador[3]}` +
-            `${selectPartner}`
+            `${fiber}${separador[3]}${selectPartner}`
     }
     sites.innerHTML = ''
     for (i in pops) {
