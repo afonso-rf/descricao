@@ -9,7 +9,7 @@
         "OSCILACAO": "OSC",
         "RUPTURA": "RUP",
         "SUPER AQUECIMENTO": "TPA",
-        "INTERMITENCIA": "INT",
+        "INDISPONIBILIDADE": "IND",
         "TAXA DE ERRO": "TXE",
         "TRANSPORTE": "TRN"
     }
