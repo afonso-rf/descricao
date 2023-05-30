@@ -11,6 +11,7 @@
         "SUPER AQUECIMENTO": "TPA",
         "INDISPONIBILIDADE": "IND",
         "TAXA DE ERRO": "TXE",
-        "TRANSPORTE": "TRN"
+        "TRANSPORTE": "TRN",
+        "RADIO": "RAD"
     }
 ]
