@@ -8,9 +8,9 @@
         "FALHA DE GERENCIA": "FGR",
         "OSCILACAO": "OSC",
         "RUPTURA": "RUP",
-        "SUPER AQUECIMENTO": "TPA",
         "INDISPONIBILIDADE": "IND",
         "TAXA DE ERRO": "TXE",
+        "TEMPERATURA ALTA": "TPA",
         "TRANSPORTE": "TRN",
         "RADIO": "RAD"
     }

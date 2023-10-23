@@ -39,7 +39,7 @@ failureType.addEventListener('blur', (event) => {
     spanError.innerText = spanText
 
     const hostLast = document.querySelector('.hostname~.hostname')
-    if (item.includes("FALHA")) {
+    if (item.includes("FALHA") || item.includes("TEMPERATURA")) {
         hostnameB.disabled = true
         hostnameB.value = ''
         hostLast.style.display = 'none'
@@ -167,7 +167,7 @@ function gerar() {
     pops.sort((a, b) => {
         return a.MUNICIPIO + a.POP < b.MUNICIPIO + b.POP ? -1 : a.MUNICIPIO + a.POP > b.MUNICIPIO + b.POP ? 1 : 0
     })
-    if (failure.includes('FALHA')) {
+    if (failure.includes('FALHA') || failure.includes('TEMPERATURA')) {
         if (failure.includes('ENERGIA')) {
             response.innerText = `${pops[0].UF}${separador[3]}` +
                 `${listFailureTypes[0][failure]}${separador[3]}` +
