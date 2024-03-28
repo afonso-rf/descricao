@@ -1,4 +1,4 @@
-const separador = ['.', '<>', '_', '::']
+const separador = ['-', '<>', '_', '::']
 
 const urlCnl = "data/codigos-cnl.json"
 const urlFailureTypes = "data/tipos-de-falhas.json"
@@ -91,7 +91,7 @@ function listJson(URL) {
 //
 function inputHostnameBlur(ELEMENT, SPLIT) {
     ELEMENT.addEventListener('blur', () => {
-        let item = ELEMENT.value.trim().toUpperCase()
+        let item = ELEMENT.value.trim().toUpperCase().replaceAll(".", separador[0])
         let spanError = document.querySelector(`#${ELEMENT.id}~span`)
         let spanText = ''
 
@@ -157,8 +157,8 @@ function tableSites(OBJ) {
 //
 function gerar() {
     const failure = failureType.value.trim().toUpperCase()
-    const hostA = hostnameA.value.trim().toUpperCase()
-    const hostB = hostnameB.value.trim().toUpperCase()
+    const hostA = hostnameA.value.trim().toUpperCase().replaceAll(".", separador[0])
+    const hostB = hostnameB.value.trim().toUpperCase().replaceAll(".", separador[0])
     const selectPartner = partner.value.trim().toUpperCase()
     const response = document.getElementById('response')
     const sites = document.querySelector('.sites')
